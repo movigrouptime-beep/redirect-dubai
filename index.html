@@ -6,8 +6,26 @@
   <meta name="robots" content="noindex,nofollow" />
   <meta http-equiv="refresh" content="4;url=https://chat.whatsapp.com/CYUm6wdjb021id9XJCfXsn?s=cl&p=a&mlu=4&ilr=4" />
   <title>Redirecionando...</title>
+
+  <!-- Meta Pixel -->
+  <script>
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window, document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+
+    fbq('init', '2168272377440349');
+    fbq('track', 'PageView');
+  </script>
+  <!-- Fim Meta Pixel -->
+
   <style>
     * { box-sizing: border-box; }
+
     body {
       margin: 0;
       min-height: 100vh;
@@ -19,6 +37,7 @@
       font-family: Arial, Helvetica, sans-serif;
       padding: 24px;
     }
+
     .card {
       width: 100%;
       max-width: 460px;
@@ -29,17 +48,20 @@
       padding: 40px 28px;
       box-shadow: 0 20px 60px rgba(0,0,0,.35);
     }
+
     h1 {
       margin: 0 0 10px;
       font-size: 27px;
       line-height: 1.2;
     }
+
     .subtitle {
       margin: 0;
       color: #a8afbd;
       font-size: 16px;
       line-height: 1.5;
     }
+
     .counter-wrap {
       width: 128px;
       height: 128px;
@@ -51,17 +73,20 @@
       justify-content: center;
       box-shadow: 0 0 32px rgba(37, 211, 102, .15);
     }
+
     #counter {
       font-size: 64px;
       font-weight: 800;
       line-height: 1;
     }
+
     .status {
       min-height: 24px;
       margin-bottom: 22px;
       color: #d9dde6;
       font-size: 15px;
     }
+
     .button {
       display: inline-block;
       width: 100%;
@@ -72,6 +97,7 @@
       font-weight: 700;
       text-decoration: none;
     }
+
     .note {
       margin-top: 18px;
       color: #707887;
@@ -80,7 +106,15 @@
     }
   </style>
 </head>
+
 <body>
+  <noscript>
+    <img height="1" width="1" style="display:none"
+      src="https://www.facebook.com/tr?id=2168272377440349&ev=PageView&noscript=1"
+      alt=""
+    />
+  </noscript>
+
   <main class="card">
     <h1>Estamos te direcionando</h1>
     <p class="subtitle">Em instantes, você será enviado para o grupo no WhatsApp.</p>
@@ -91,9 +125,12 @@
 
     <div id="status" class="status">Preparando seu acesso...</div>
 
-    <a class="button"
-       href="https://chat.whatsapp.com/CYUm6wdjb021id9XJCfXsn?s=cl&p=a&mlu=4&ilr=4"
-       rel="noopener">
+    <a
+      class="button"
+      id="whatsappButton"
+      href="https://chat.whatsapp.com/CYUm6wdjb021id9XJCfXsn?s=cl&p=a&mlu=4&ilr=4"
+      rel="noopener"
+    >
       Entrar no grupo agora
     </a>
 
@@ -106,8 +143,16 @@
     const destination = "https://chat.whatsapp.com/CYUm6wdjb021id9XJCfXsn?s=cl&p=a&mlu=4&ilr=4";
     const counterElement = document.getElementById("counter");
     const statusElement = document.getElementById("status");
+    const whatsappButton = document.getElementById("whatsappButton");
+
+    whatsappButton.addEventListener("click", function () {
+      if (typeof fbq === "function") {
+        fbq("trackCustom", "WhatsAppClick");
+      }
+    });
 
     let seconds = 3;
+
     const messages = {
       3: "Preparando seu acesso...",
       2: "Quase lá...",
@@ -124,9 +169,18 @@
       }
 
       clearInterval(timer);
+
       counterElement.textContent = "✓";
       statusElement.textContent = "Redirecionando...";
-      window.location.replace(destination);
+
+      if (typeof fbq === "function") {
+        fbq("trackCustom", "RedirectWhatsApp");
+      }
+
+      setTimeout(() => {
+        window.location.replace(destination);
+      }, 500);
+
     }, 1000);
   </script>
 </body>
